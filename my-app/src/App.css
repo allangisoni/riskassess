@@ -41,22 +41,16 @@
 
 body {
        
-/** background-image: linear-gradient( rgba(14, 43, 99, 0.75), rgba(14, 43, 99, 0.75));    
- background-image: url("images/bglogin.jpg"); **/
- background:linear-gradient(0deg, rgba(14, 43, 99, 0.70), rgba(14, 43, 99, 0.70)), url("images/laptopbg2.jpg");
- 
-         
- /** background-image: linear-gradient(to right, #0e2b63 ,#103070, #103070, #5a328a); 
-    background-color: #17a2b8;   **/
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat; 
-  margin: 0;
+
   padding: 0;
 
   height: 100vh;
 }
-    
+
+
+
+
+
 #login .container #login-row #login-column #login-box {
   margin-top: 80px;
   max-width: 400px;

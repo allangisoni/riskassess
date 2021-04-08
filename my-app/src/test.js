@@ -90,7 +90,7 @@ function validateUser(mFormData){
 
               updateui();
 
-               {validuser ? alert("ooooo") : alert("sss") }
+             //  {validuser ? alert("ooooo") : alert("sss") };
 
            // console.log("After"+ " " +validuser);
     
@@ -131,7 +131,7 @@ return (
 
 
 
-<div>
+<div className="testDiv">
 
   <h4 className="headerTitle"> Status: {validuser.toString()}</h4> 
 <div  className="container-fluid headerDiv" >
