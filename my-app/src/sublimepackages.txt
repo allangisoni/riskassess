@@ -1,0 +1,6 @@
+install material theme
+
+//<div> 
+//  <button onClick={(() => dispatch({type:"ISUSERVALIDATED"})) } > user </button>
+//  <button onClick={updateui} > ppp </button>
+//</div> 

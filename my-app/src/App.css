@@ -1,0 +1,117 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+body {
+       
+/** background-image: linear-gradient( rgba(14, 43, 99, 0.75), rgba(14, 43, 99, 0.75));    
+ background-image: url("images/bglogin.jpg"); **/
+ background:linear-gradient(0deg, rgba(14, 43, 99, 0.70), rgba(14, 43, 99, 0.70)), url("images/laptopbg2.jpg");
+ 
+         
+ /** background-image: linear-gradient(to right, #0e2b63 ,#103070, #103070, #5a328a); 
+    background-color: #17a2b8;   **/
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat; 
+  margin: 0;
+  padding: 0;
+
+  height: 100vh;
+}
+    
+#login .container #login-row #login-column #login-box {
+  margin-top: 80px;
+  max-width: 400px;
+  height: 360px;
+  border: 0px solid #00b1eb; 
+ /** background-color: #103070; **/
+}
+
+
+label{
+            color: 
+    }
+    
+    
+    .form-group{
+          margin-left: 16px; 
+          margin-top: 8px;
+    }    
+ #mypassword, #username{
+    background-color: #f2f2f2;
+    border: 2px solid #afca0b;    
+    width: 400px;
+  
+    } 
+  
+    
+    #loginbtn{
+        background-color: #ffbb00;
+        width: 400px;
+        margin-top: 30px;
+    }
+    
+    
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+
+.headerDiv {
+  background-color:#0e2b63;
+}
+
+.companylogo{
+  margin-left: 16px;
+}
+.headerTitle {
+
+color:#fff;
+text-align: center;
+}
+
+.headerHr {
+
+background-color:#fff;
+height:2px;
+}
