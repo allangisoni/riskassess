@@ -5,6 +5,7 @@ import home from './home';
 import Test from './test';
 import Nav from './components/Nav';
 import Users from './components/Users';
+import Demo from './demo';
 import {useSelector, useDispatch} from 'react-redux';
 import { BrowserRouter as Router, Link, Switch , Route } from 'react-router-dom';
 import './components/css/components.css';
@@ -27,7 +28,7 @@ function App() {
         
          <Router>
          <div className="appDiv"> 
-          {ValidUser ?  <Nav />: <Test /> }
+          {!ValidUser ?  <Demo />: <Test /> }
         
            <Switch> 
            <Route path="/components/Nav" component={Nav} />
