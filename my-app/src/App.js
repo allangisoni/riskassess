@@ -3,13 +3,13 @@ import React from 'react';
 import  Hello from './Hello';
 import home from './home';
 import Test from './test';
-import Nav from './components/Nav';
+import Demo from './components/Demo';
 import Users from './components/Users';
-import Demo from './demo';
 import {useSelector, useDispatch} from 'react-redux';
 import { BrowserRouter as Router, Link, Switch , Route } from 'react-router-dom';
 import './components/css/components.css';
 import './components/css/sidebar.css';
+
 
 
 
@@ -26,20 +26,15 @@ function App() {
     return(
  
         
-         <Router>
+        <Router>
          <div className="appDiv"> 
           {!ValidUser ?  <Demo />: <Test /> }
         
-           <Switch> 
-           <Route path="/components/Nav" component={Nav} />
-           <Route path="/components/Users" component={Users} />
-           </Switch>
-      
+       
+
         
         </div>
-          </Router>
-
-        //{ValidUser ?  <div><p>loggedin</p></div>  : ' ' }
+        </Router>
  
       
 

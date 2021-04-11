@@ -37,3 +37,57 @@ Nav Component
 .navDiv{
     background: darkblue;
 }
+
+.navDiv h2{
+    color: aliceblue;
+}
+
+
+/**
+
+New Entry
+**/
+
+
+/**
+
+SafetyPMD
+**/
+.card {
+    padding: 8px 16px;
+}
+
+.input-group{
+    margin: 12px 0px 0px 0px;
+}
+
+.col1{
+    margin-left: 16px;
+}
+
+.spancounter {
+    color: #ff0000;
+}
+
+
+@media only screen and (max-width: 767px) {
+    /* phones */
+
+ 
+.col1{
+    margin: 0px 0 0 0px;
+    
+}
+    
+    .PmdForm{
+        margin-left: 10px;
+    }
+    
+    .guidePic{
+        padding: 16px 0;
+    }
+ 
+}
+
+
+@media only screen and (min-width: 992px){ }
