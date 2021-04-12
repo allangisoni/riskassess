@@ -31,6 +31,29 @@ const useStyles = makeStyles((theme) => ({
 
 function SafetyPMD() {
     
+ const [riskTotal, calculateTotal] = useState(0);  
+ const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
+ const [boxColor, setBoxColor] = useState("success.main");  
+ var today = new Date();
+    
+ var date = today.getFullYear()+'-'+adjust(today.getMonth()+1)+'-'+adjust(today.getDate());
+ var time = adjust(today.getHours()) + ":" + adjust(today.getMinutes())+ ":" + adjust(today.getSeconds());
+ var dateTime = `${date}T${time}`;    
+
+    
+ const[currentDateTime, setDateTime] = useState(dateTime); 
+       
+ const currentdate = React.useRef(dateTime);    
+ const lastupdatedate = React.useRef(dateTime);   
+    
+    
+    
+ const supervisor = React.useRef(null);
+ const operator = React.useRef(null);
+ const line = React.useRef(null);
+ const shift = React.useRef(null);
+ const countermeasures = React.useRef(null);
+    
  const total1 = React.useRef(0);
  const total2 = React.useRef(0);
  const total3 = React.useRef(0);
@@ -44,20 +67,9 @@ function SafetyPMD() {
     
 
     
- const [riskTotal, calculateTotal] = useState(0);  
- const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
- const [boxColor, setBoxColor] = useState("success.main");  
- var today = new Date();
-    
- var date = today.getFullYear()+'-'+adjust(today.getMonth()+1)+'-'+adjust(today.getDate());
- var time = adjust(today.getHours()) + ":" + adjust(today.getMinutes())+ ":" + adjust(today.getSeconds());
- var dateTime = `${date}T${time}`;    
+ 
 
-    
- const[currentDateTime, setDateTime] = useState(dateTime); 
- //const currentDate = React.useRef(dateTime);    
-
-console.log(currentDateTime);    
+//console.log(currentDateTime);    
  
 
 
@@ -123,14 +135,49 @@ function saveInfo(event){
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('currentdate', '2');
-    formData.append('lastupdatedate','2');
+    formData.append('currentdate', currentdate.current.value);
+    formData.append('lastupdatedate', lastupdatedate.current.value);
+    formData.append('supervisor', supervisor.current.value);
+    formData.append('operator', operator.current.value);
+    formData.append('line', line.current.value);
+    formData.append('shift', shift.current.value);
+    formData.append('total1', total1.current.value);
+    formData.append('total2', total2.current.value);
+    formData.append('total3', total3.current.value);
+    formData.append('total4', total4.current.value);
+    formData.append('total5', total5.current.value);
+    formData.append('total6', total6.current.value);
+    formData.append('total7', total7.current.value);
+    formData.append('total8', total8.current.value);
+    formData.append('total9', total9.current.value);
+    formData.append('total10', total10.current.value);
+    formData.append('totalscore', riskTotal);
+    formData.append('actualrisk', riskLevel);
+    formData.append('countermeasures', countermeasures.current.value);
       
     
     JSON.stringify(formData);
     
-    console.log(formData.currentdate);
-
+    console.log('currentdate: ' + formData.get('currentdate'));
+    console.log('lastupdatedate: ' + formData.get('lastupdatedate'));
+    console.log('supervisor: ' + formData.get('supervisor'));
+    console.log('operator: ' + formData.get('operator'));
+    console.log('line: ' + formData.get('line'));
+    console.log('shift: ' + formData.get('shift'));
+    console.log('total1: ' + formData.get('total1'));
+    console.log('total2: ' + formData.get('total2'));
+    console.log('total3: ' + formData.get('total3'));
+    console.log('total4: ' + formData.get('total4'));
+    console.log('total5: ' + formData.get('total5'));
+    console.log('total6: ' + formData.get('total6'));
+    console.log('total7: ' + formData.get('total7'));
+    console.log('total8: ' + formData.get('total8'));
+    console.log('total9: ' + formData.get('total9'));
+    console.log('total10: ' + formData.get('total10'));
+    console.log('totalscore: ' + formData.get('totalscore'));
+    console.log('actualrisk: ' + formData.get('actualrisk'));
+    console.log('countermeasures: ' + formData.get('countermeasures'));
+ 
 };    
     
     
@@ -193,7 +240,7 @@ return (
                        <span className="input-group-text" id="currentdate">Date</span>
                    </div>
            
-                     <input class="form-control" type="datetime-local" defaultValue={currentDateTime} id="currentdate" name="currentdate" />
+                     <input className="form-control" type="datetime-local" defaultValue={currentDateTime} id="currentdate" name="currentdate" ref={currentdate} />
     
               
                 </div>
@@ -204,7 +251,7 @@ return (
                        <div className="input-group-prepend">
                     <span className="input-group-text" id="lastupdatedate">Last Updated</span>
                      </div>
-                   <input class="form-control" type="datetime-local" defaultValue={currentDateTime}   id="lastupdatedate" name="lastupdatedate" />
+                   <input className="form-control" type="datetime-local" defaultValue={currentDateTime}   id="lastupdatedate" name="lastupdatedate" ref={lastupdatedate} />
     
                 </div>  
         
@@ -217,7 +264,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Supervisor</span>
                </div>
-                  <input type="text" className="form-control" name="supervisor" />
+                  <input type="text" className="form-control" name="supervisor" ref={supervisor}  />
               </div>
         
           </div>
@@ -226,7 +273,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Operator</span>
                </div>
-                  <input type="text" readonly className="form-control" name="operator" value="" />
+                  <input type="text" readOnly className="form-control" name="operator" ref={operator}   />
               </div>
         
           </div>
@@ -238,8 +285,8 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Line</span>
                </div>
-                  <select className="custom-select" id="line" name="line" required>
-                  <option selected>Choose...</option>
+                  <select className="custom-select" id="line" name="line" required ref={line} >
+                  <option defaultValue>Choose...</option>
                   <option value="Conditioning">Conditioning</option>
                   <option value="Drying">Drying</option>
                         
@@ -252,8 +299,8 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Shift</span>
                </div>
-                <select className="custom-select" id="shift" name="shift" required>
-                  <option selected>Choose...</option>
+                <select className="custom-select" id="shift" name="shift" required ref={shift} >
+                  <option defaultValue>Choose...</option>
                 <option value="Morning Shift: 7am-3pm">Morning Shift: 7am-3pm</option>
                   <option value="Afternoon Shift: 3pm-11pm">Afternoon Shift: 3pm-11pm</option>
                   <option value="Night Shift: 11pm-7am">Night Shift: 11pm-7am</option>
@@ -266,7 +313,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label for="exampleFormControlSelect2">1.) Team Staffing less than set Standard?<br /> <span className="spancounter">Get additional staff to fill the crew.</span></label>
+               <label htmlFor="exampleFormControlSelect2">1.) Team Staffing less than set Standard?<br /> <span className="spancounter">Get additional staff to fill the crew.</span></label>
            <select  className="form-control" id="total1" name="total1" onChange={getTotal} ref={total1} >
            <option value="0">0</option>
           <option value="1">1</option>
@@ -280,7 +327,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label for="exampleFormControlSelect2">2.) Start up from down day or shutdown activities?<br /> <span className="spancounter" > Complete QRP for start- up /shut down activities</span></label>
+               <label htmlFor="exampleFormControlSelect2">2.) Start up from down day or shutdown activities?<br /> <span className="spancounter" > Complete QRP for start- up /shut down activities</span></label>
            <select  className="form-control" id="total2" name="total2" onChange={getTotal} ref={total2}>
             <option value="0">0</option>
           <option value="2">2</option>
@@ -294,7 +341,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label for="exampleFormControlSelect2">3.) Personnel is less than 6 weeks of machine operation after formal induction training<br /> <span className="spancounter" >Remove personnel from the machine until ensure that it is accompanied by a tutor?</span ></label>
+               <label htmlFor="exampleFormControlSelect2">3.) Personnel is less than 6 weeks of machine operation after formal induction training<br /> <span className="spancounter" >Remove personnel from the machine until ensure that it is accompanied by a tutor?</span ></label>
            <select  className="form-control" id="total3" name="total3" onChange={getTotal} ref={total3}>
                <option value="0">0</option>
           <option value="3">3</option>
@@ -308,7 +355,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label for="exampleFormControlSelect2">4.) CO, NPI, CPT and visitors tour of the factory?<br /> <span className="spancounter" >Barricade the area ; complete QRP on tasks and induction for visitors.</span></label>
+               <label htmlFor="exampleFormControlSelect2">4.) CO, NPI, CPT and visitors tour of the factory?<br /> <span className="spancounter" >Barricade the area ; complete QRP on tasks and induction for visitors.</span></label>
            <select  className="form-control" id="total4" name="total4" onChange={getTotal} ref={total4}>
             <option value="0">0</option>
           <option value="4">4</option>
@@ -322,7 +369,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label for="exampleFormControlSelect2">5.) Corrective Maintenance/Manual feeding/Breakdown/Trouble shooting processes?<br /> <span className="spancounter" >EO/Technician to escalate to Team leader or Line lead and complete QRP on tasks. Team leader or line lead to validate the countermeasures in place.</span></label>
+               <label htmlFor="exampleFormControlSelect2">5.) Corrective Maintenance/Manual feeding/Breakdown/Trouble shooting processes?<br /> <span className="spancounter" >EO/Technician to escalate to Team leader or Line lead and complete QRP on tasks. Team leader or line lead to validate the countermeasures in place.</span></label>
            <select  className="form-control"  id="total5" name="total5" onChange={getTotal} ref={total5}>
           <option value="0">0</option>
           <option value="4">4</option>
@@ -336,7 +383,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label for="exampleFormControlSelect2">6.) 1 First aid or more in the last 7 days?<br /> <span  className="spancounter">Ensure effective communication to all modules, implement containment and correction actions</span></label>
+               <label htmlFor="exampleFormControlSelect2">6.) 1 First aid or more in the last 7 days?<br /> <span  className="spancounter">Ensure effective communication to all modules, implement containment and correction actions</span></label>
            <select  className="form-control" id="total6" name="total6" onChange={getTotal} ref={total6}>
           <option value="0">0</option>
           <option value="4">4</option>
@@ -350,7 +397,7 @@ return (
          <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label for="exampleFormControlSelect2">7.) Obstruction on shop-floor gang-way (excess pallets or machinery on gangway)?<br /> <span className="spancounter" >Cordon the area, only experienced personnel on the line, complete JSA for the tasks.</span></label>
+               <label htmlFor="exampleFormControlSelect2">7.) Obstruction on shop-floor gang-way (excess pallets or machinery on gangway)?<br /> <span className="spancounter" >Cordon the area, only experienced personnel on the line, complete JSA for the tasks.</span></label>
            <select  className="form-control" id="total7"  name="total7" onChange={getTotal} ref={total7}>
          <option value="0">0</option>
           <option value="6">6</option>
@@ -364,7 +411,7 @@ return (
          <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label for="exampleFormControlSelect2">8.) Preventive Maintenance/Deep cleaning?<br /> <span className="spancounter" >Contact shift team leader or cell leader or QA supervisor.</span></label>
+               <label htmlFor="exampleFormControlSelect2">8.) Preventive Maintenance/Deep cleaning?<br /> <span className="spancounter" >Contact shift team leader or cell leader or QA supervisor.</span></label>
            <select  className="form-control" id="total8" name="total8" onChange={getTotal} ref={total8}>
           <option value="0">0</option>
           <option value="7">7</option>
@@ -378,7 +425,7 @@ return (
         <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label for="exampleFormControlSelect2">9.) Machine running with broken/missing guard or mal functioning interlock/New machine installation?<br /> <span className="spancounter">Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures.</span></label>
+               <label htmlFor="exampleFormControlSelect2">9.) Machine running with broken/missing guard or mal functioning interlock/New machine installation?<br /> <span className="spancounter">Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures.</span></label>
            <select  className="form-control" id="total9" name="total9" onChange={getTotal} ref={total9}>
           <option value="0">0</option>
           <option value="7">7</option>
@@ -393,7 +440,7 @@ return (
             <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label for="exampleFormControlSelect2">10.) Open electric cabinets/Environmental hazards rain water ingress ,dust fumes leakages,smoke,noise levels?<br /> <span className="spancounter" >Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures.</span></label>
+               <label htmlFor="exampleFormControlSelect2">10.) Open electric cabinets/Environmental hazards rain water ingress ,dust fumes leakages,smoke,noise levels?<br /> <span className="spancounter" >Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures.</span></label>
            <select  className="form-control" id="total10" name="total10" onChange={getTotal} ref={total10}>
           <option value="0">0</option>
           <option value="7">7</option>
@@ -412,7 +459,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Total Score</span>
                </div>
-                  <input type="text" readonly  className="form-control" id="totalscore" name="totalscore" value={riskTotal} />
+                  <input type="text" readOnly  className="form-control" id="totalscore" name="totalscore" value={riskTotal} />
               </div>
         
          </div> 
@@ -421,7 +468,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Actual Risk Level</span>
                </div>
-                  <input type="text"  readonly ="readonly" className="form-control" id="actualrisk" name="actualrisk"  value={riskLevel} />
+                  <input type="text"  readOnly className="form-control" id="actualrisk" name="actualrisk"  value={riskLevel} />
               </div>
         
          </div> 
@@ -431,8 +478,8 @@ return (
           
           <div className="col-lg-12 col-md-12">  
           <div className="form-group">
-          <label for="exampleFormControlTextarea1">Countermeasures</label>
-          <textarea className="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="None" name="countermeasures"></textarea>
+          <label htmlFor="exampleFormControlTextarea1">Countermeasures</label>
+          <textarea className="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="None" name="countermeasures" ref={countermeasures} ></textarea>
           </div>
           </div>      
               
@@ -444,9 +491,8 @@ return (
               
         <Button
         variant="contained"
-        color="success.main"
+        color="primary"
         size="large"
-        className={classes.button}
         startIcon={<SaveIcon />}
         type ='submit'
          >

@@ -85,10 +85,10 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {drawerIcons.map((text, index) => (
-         <Link to={text.url}>
-          <ListItem button key={text.title}>
+         <Link to={text.url} key={text.title}>
+          <ListItem button >
          
-           <ListItemIcon> <text.icon/> </ListItemIcon>
+           <ListItemIcon > <text.icon/> </ListItemIcon>
      
             <ListItemText primary={text.title} />
           </ListItem>
@@ -154,7 +154,7 @@ function ResponsiveDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
  
-        <Typography paragraph className={classes.divContent}>
+        <div className={classes.divContent}>
         <Switch> 
            <Route path="/" exact component={NewEntry} />  
            <Route path="/Users" component={Users} />
@@ -163,7 +163,7 @@ function ResponsiveDrawer(props) {
            <Route path="/pmd/Safety" component={SafetyPMD} />
            <Route path="/pmd/Quality" component={QualityPMD} />
            </Switch>
-        </Typography>
+        </div>
       
       
       </main>
