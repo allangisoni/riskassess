@@ -119,10 +119,11 @@ let total = parseInt(total1.current.value, 10) +
 
 function adjust(v){
 if(v>9){
-return v.toString();
-}else{
-return '0'+v.toString();
-}
+  return v.toString();
+       }
+else{
+  return '0'+v.toString();
+      }
 }
     
 function updateDateTime(){
@@ -177,6 +178,30 @@ function saveInfo(event){
     console.log('totalscore: ' + formData.get('totalscore'));
     console.log('actualrisk: ' + formData.get('actualrisk'));
     console.log('countermeasures: ' + formData.get('countermeasures'));
+
+
+
+ Axios({
+            method: 'post',
+            url: 'http://localhost:3000/reactlearn/my-app/src/api/pmd/createsafety.php',
+            data: formData,
+            config: { headers: {'Content-Type': 'application/json'  } }
+        })
+        .then(function (response) {
+            //handle success
+           console.log(response.data);
+     
+           //const responseJwt = response.data.jwt;
+
+
+        })
+        .catch(function (response) {
+            //handle error
+            console.log(response);
+            // return false;
+        
+        });
+
  
 };    
     
