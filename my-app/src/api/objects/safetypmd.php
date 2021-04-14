@@ -113,7 +113,26 @@ function create(){
     $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                currentdate=:currentdate, lastupdatedate=:lastupdatedate, supervisor=:supervisor, operator=:operator, line=:line, shift=:shift,  total1=:total1, total2=:total2, total3=:total3, total4=:total4, total5=:total5,total6=:total6, total7=:total7, total8=:total8, total9=:total9, total10=:total0, totalscore=:totalscore, actualrisk=:actualrisk, countermeasures:=countermeasures";
+                currentdate=:currentdate,
+                lastupdatedate=:lastupdatedate,
+                supervisor=:supervisor, 
+                operator=:operator, 
+                line=:line, 
+                shift=:shift, 
+                total1=:total1, 
+                total2=:total2, 
+                total3=:total3,
+                total4=:total4,
+                total5=:total5, 
+                total6=:total6,
+                total7=:total7, 
+                total8=:total8,
+                total9=:total9, 
+                total10=:total10,
+                totalscore=:totalscore,
+                actualrisk=:actualrisk,
+                countermeasures=:countermeasures
+               ";
   
     // prepare query
     $stmt = $this->conn->prepare($query);
@@ -137,6 +156,7 @@ function create(){
     $this->total10=htmlspecialchars(strip_tags($this->total10));
     $this->totalscore=htmlspecialchars(strip_tags($this->totalscore));
     $this->actualrisk=htmlspecialchars(strip_tags($this->actualrisk));
+    //$this->countermeasures=htmlspecialchars(strip_tags($this->countermeasures));
   
     // bind values
     $stmt->bindParam(":currentdate", $this->currentdate);

@@ -73,7 +73,7 @@ function validateUser(mFormData){
 
        Axios({
             method: 'post',
-             url: 'reactlearn/my-app/src/api/user/validate_token.php',
+             url: 'http://localhost:3000/reactlearn/my-app/src/api/user/validate_token.php',
             data: {jwt:responseJwt},
             config: { headers: {'Content-Type': 'application/json' }}
         })

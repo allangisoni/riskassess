@@ -185,7 +185,7 @@ function saveInfo(event){
             method: 'post',
             url: 'http://localhost:3000/reactlearn/my-app/src/api/pmd/createsafety.php',
             data: formData,
-            config: { headers: {'Content-Type': 'application/json'  } }
+            config: { headers: {'Content-Type': 'application/json'  }}
         })
         .then(function (response) {
             //handle success
@@ -298,7 +298,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Operator</span>
                </div>
-                  <input type="text" readOnly className="form-control" name="operator" ref={operator}   />
+                  <input type="text" readOnly className="form-control" name="operator" ref={operator} defaultValue="Tim"   />
               </div>
         
           </div>

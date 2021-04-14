@@ -28,7 +28,7 @@ function App() {
         
         <Router>
          <div className="appDiv"> 
-          {!ValidUser ?  <Demo />: <Test /> }
+          {ValidUser ?  <Demo />: <Test /> }
         
        
 

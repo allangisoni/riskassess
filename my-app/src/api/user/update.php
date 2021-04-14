@@ -48,7 +48,7 @@ if($jwt){
 
 
         // set ID property of user to be edited
-        $user->id =  $decoded->data->id;;
+        $user->id =  $decoded->data->id;
   
         // set product property values
         $user->firstname = $data->firstname;
