@@ -43,7 +43,10 @@ const useStyles = makeStyles((theme) => ({
 
 function SafetyPMD() {
     
-const [isComplete, goBack]   = useState(false);    
+const [isComplete, goBack]   = useState(false);  
+
+const [isShiftSet, setShift] = useState(false);  
+const [isLineSet, setLine]   = useState(false);  
     
  const [riskTotal, calculateTotal] = useState(0);  
  const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
@@ -148,10 +151,35 @@ function updateDateTime(){
     
     //setDateTime();
 }
+
+
+  function validatFormData(){
+
+    const defaultItem = "Choose...";
+   
+    if(!(defaultItem.localeCompare((shift.current.value).toString()))){
+      setShift(false);
+    } else{
+      setShift(true);
+    }
+
+
+    if(!(defaultItem.localeCompare((line.current.value).toString()))){
+      setLine(false);
+    } else{
+      setLine(true);
+    }
+
+ }
     
 function saveInfo(event){
     
     event.preventDefault();
+
+    validatFormData();
+
+
+   if(isShiftSet && isLineSet){
 
     const formData = new FormData();
     formData.append('currentdate', currentdate.current.value);
@@ -222,6 +250,23 @@ function saveInfo(event){
             // return false;
         
         });
+
+
+      }  else{
+
+
+            if(!isLineSet){
+                alert("Line is required");
+             }
+            if(!isShiftSet){
+                alert("Shift is required");
+             }
+
+            
+                console.log(shift.current.value);
+      }
+
+
 
  
 };    
