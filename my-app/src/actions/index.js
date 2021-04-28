@@ -9,3 +9,12 @@ export  const ChangeUserStatus = () => {
     };
 };
 
+
+export  const updateUserInfo = (userObj) => {
+    
+    return{
+        
+        type:"UPDATEUSERINFO",
+        payload: userObj
+    };
+};

@@ -8,6 +8,8 @@ import {useSelector, useDispatch} from 'react-redux';
 //import {ChangeUserStatus} from './actions/index';
 //import {Updateuserstatus} from './actions/updateuserstatus';
 
+import UserModel from './user';
+
 function Test() {
 
   const dispatch = useDispatch();
@@ -15,6 +17,8 @@ function Test() {
   const password = React.useRef(null);
 
   const validuser = useSelector(state => state.userStatus);
+         
+
 
 
  function handleUserNameChange(event) {
@@ -32,9 +36,22 @@ function Test() {
 
  function updateui() {
    
-  dispatch({type:"ISUSERVALIDATED"});
+ dispatch({type:"ISUSERVALIDATED"});
+  
+    
+
+
 
  };
+    
+function updateuserinfo(userdata){
+ 
+//const  userModel = UserModel('allan', 'admin');     
+dispatch({type:"UPDATEUSERINFO", payload:userdata});       
+   
+
+}
+    
 
 function handleSubmit(event) {
  
@@ -87,8 +104,10 @@ function validateUser(mFormData){
           
            
              //console.log("Before"+ " " + validuser);
-
-              updateui();
+              updateuserinfo(response.data);
+              //updateui();
+            
+       
 
              //  {validuser ? alert("ooooo") : alert("sss") };
 

@@ -4,6 +4,7 @@ import Axios from 'axios';
 //import './css/components.css';
 import { BrowserRouter as Router, Link, Switch , Route } from 'react-router-dom';
 import safety from './../../images/safety.png';
+import NewEntry from './../NewEntry';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -11,6 +12,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import RefreshRoundedIcon from '@material-ui/icons/RefreshRounded';
 import SaveIcon from '@material-ui/icons/SaveRounded';
+import Divider from '@material-ui/core/Divider';
+import {useSelector, useDispatch} from 'react-redux';
+import { Redirect } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
     button: {
      backgroundColor: 'green',    
     },
+    
+    dividerSave: {
+      margin: '16px 0 0 0', 
+    },
+    
+    btnSave: {
+      margin: '24px 0 0 0',    
+    },
 
     
 }));
@@ -30,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 function SafetyPMD() {
+    
+const [isComplete, goBack]   = useState(false);    
     
  const [riskTotal, calculateTotal] = useState(0);  
  const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
@@ -53,6 +67,10 @@ function SafetyPMD() {
  const line = React.useRef(null);
  const shift = React.useRef(null);
  const countermeasures = React.useRef(null);
+
+const currentUser = useSelector(state => state.userInfo.user.data.firstname) + " " + useSelector(state => state.userInfo.user.data.lastname);    
+    
+console.log(currentUser);   
     
  const total1 = React.useRef(0);
  const total2 = React.useRef(0);
@@ -63,7 +81,7 @@ function SafetyPMD() {
  const total7 = React.useRef(0);
  const total8 = React.useRef(0);
  const total9 = React.useRef(0);
- const total10 = React.useRef(0);
+ const total10 =React.useRef(0);
     
 
     
@@ -190,8 +208,11 @@ function saveInfo(event){
         .then(function (response) {
             //handle success
            console.log(response.data);
+
      
            //const responseJwt = response.data.jwt;
+           alert("Data saved Successfully");
+            goBack(true);
 
 
         })
@@ -206,11 +227,18 @@ function saveInfo(event){
 };    
     
     
+   if(isComplete){
+      
+    return <Redirect to="/NewEntry" />
+   } 
+    
+    else{
+       
     
 
 return (
 
-    
+
     <div className="PmdForm"> 
     
   
@@ -219,7 +247,9 @@ return (
 
         
     <div className="col-sm-12 col-md-9 col-lg-10  ">
-    <div className="card">    
+    <div className="card">  
+    <div className ="cardDiv">
+    
     <div>
 
        <Grid container spacing={2}>
@@ -254,7 +284,9 @@ return (
     
      </Grid>
         
-    </div>    
+    </div> 
+
+       </div>  
     <form id="qualityform" onSubmit={saveInfo} >
           <div className="row"> 
           
@@ -298,7 +330,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Operator</span>
                </div>
-                  <input type="text" readOnly className="form-control" name="operator" ref={operator} defaultValue="Tim"   />
+                  <input type="text" readOnly className="form-control" name="operator" ref={operator} defaultValue={currentUser}  />
               </div>
         
           </div>
@@ -319,7 +351,7 @@ return (
               </div>
         
           </div>
-                <div className="col-lg-6 col-md-12">  
+            <div className="col-lg-6 col-md-12">  
               <div className="input-group">
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Shift</span>
@@ -334,11 +366,13 @@ return (
         
           </div>
         </div> 
+
+        
         
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">1.) Team Staffing less than set Standard?<br /> <span className="spancounter">Get additional staff to fill the crew.</span></label>
+               <label htmlFor="exampleFormControlSelect2">1.) Team Staffing less than set Standard?<br /> <span className="spancounter"><i>Get additional staff to fill the crew. </i></span></label>
            <select  className="form-control" id="total1" name="total1" onChange={getTotal} ref={total1} >
            <option value="0">0</option>
           <option value="1">1</option>
@@ -352,7 +386,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">2.) Start up from down day or shutdown activities?<br /> <span className="spancounter" > Complete QRP for start- up /shut down activities</span></label>
+               <label htmlFor="exampleFormControlSelect2">2.) Start up from down day or shutdown activities?<br /> <span className="spancounter" ><i> Complete QRP for start- up /shut down activities</i></span></label>
            <select  className="form-control" id="total2" name="total2" onChange={getTotal} ref={total2}>
             <option value="0">0</option>
           <option value="2">2</option>
@@ -366,7 +400,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">3.) Personnel is less than 6 weeks of machine operation after formal induction training<br /> <span className="spancounter" >Remove personnel from the machine until ensure that it is accompanied by a tutor?</span ></label>
+               <label htmlFor="exampleFormControlSelect2">3.) Personnel is less than 6 weeks of machine operation after formal induction training<br /> <span className="spancounter" > <i> Remove personnel from the machine until ensure that it is accompanied by a tutor? </i></span ></label>
            <select  className="form-control" id="total3" name="total3" onChange={getTotal} ref={total3}>
                <option value="0">0</option>
           <option value="3">3</option>
@@ -380,7 +414,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">4.) CO, NPI, CPT and visitors tour of the factory?<br /> <span className="spancounter" >Barricade the area ; complete QRP on tasks and induction for visitors.</span></label>
+               <label htmlFor="exampleFormControlSelect2">4.) CO, NPI, CPT and visitors tour of the factory?<br /> <span className="spancounter" > <i>Barricade the area ; complete QRP on tasks and induction for visitors. </i></span></label>
            <select  className="form-control" id="total4" name="total4" onChange={getTotal} ref={total4}>
             <option value="0">0</option>
           <option value="4">4</option>
@@ -394,7 +428,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
            <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">5.) Corrective Maintenance/Manual feeding/Breakdown/Trouble shooting processes?<br /> <span className="spancounter" >EO/Technician to escalate to Team leader or Line lead and complete QRP on tasks. Team leader or line lead to validate the countermeasures in place.</span></label>
+               <label htmlFor="exampleFormControlSelect2">5.) Corrective Maintenance/Manual feeding/Breakdown/Trouble shooting processes?<br /> <span className="spancounter" ><i> EO/Technician to escalate to Team leader or Line lead and complete QRP on tasks. Team leader or line lead to validate the countermeasures in place. </i></span></label>
            <select  className="form-control"  id="total5" name="total5" onChange={getTotal} ref={total5}>
           <option value="0">0</option>
           <option value="4">4</option>
@@ -408,7 +442,7 @@ return (
           <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">6.) 1 First aid or more in the last 7 days?<br /> <span  className="spancounter">Ensure effective communication to all modules, implement containment and correction actions</span></label>
+               <label htmlFor="exampleFormControlSelect2">6.) 1 First aid or more in the last 7 days?<br /> <span  className="spancounter"><i>Ensure effective communication to all modules, implement containment and correction actions </i> </span></label>
            <select  className="form-control" id="total6" name="total6" onChange={getTotal} ref={total6}>
           <option value="0">0</option>
           <option value="4">4</option>
@@ -422,7 +456,7 @@ return (
          <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">7.) Obstruction on shop-floor gang-way (excess pallets or machinery on gangway)?<br /> <span className="spancounter" >Cordon the area, only experienced personnel on the line, complete JSA for the tasks.</span></label>
+               <label htmlFor="exampleFormControlSelect2">7.) Obstruction on shop-floor gang-way (excess pallets or machinery on gangway)?<br /> <span className="spancounter" > <i>Cordon the area, only experienced personnel on the line, complete JSA for the tasks. </i></span></label>
            <select  className="form-control" id="total7"  name="total7" onChange={getTotal} ref={total7}>
          <option value="0">0</option>
           <option value="6">6</option>
@@ -436,7 +470,7 @@ return (
          <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">8.) Preventive Maintenance/Deep cleaning?<br /> <span className="spancounter" >Contact shift team leader or cell leader or QA supervisor.</span></label>
+               <label htmlFor="exampleFormControlSelect2">8.) Preventive Maintenance/Deep cleaning?<br /> <span className="spancounter" ><i>Contact shift team leader or cell leader or QA supervisor.</i></span></label>
            <select  className="form-control" id="total8" name="total8" onChange={getTotal} ref={total8}>
           <option value="0">0</option>
           <option value="7">7</option>
@@ -450,7 +484,7 @@ return (
         <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">9.) Machine running with broken/missing guard or mal functioning interlock/New machine installation?<br /> <span className="spancounter">Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures.</span></label>
+               <label htmlFor="exampleFormControlSelect2">9.) Machine running with broken/missing guard or mal functioning interlock/New machine installation?<br /> <span className="spancounter"> <i>Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures. </i></span></label>
            <select  className="form-control" id="total9" name="total9" onChange={getTotal} ref={total9}>
           <option value="0">0</option>
           <option value="7">7</option>
@@ -465,7 +499,7 @@ return (
             <div className="row"> 
             <div className="col-lg-12 col-md-12">  
             <div className="form-group">
-               <label htmlFor="exampleFormControlSelect2">10.) Open electric cabinets/Environmental hazards rain water ingress ,dust fumes leakages,smoke,noise levels?<br /> <span className="spancounter" >Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures.</span></label>
+               <label htmlFor="exampleFormControlSelect2">10.) Open electric cabinets/Environmental hazards rain water ingress ,dust fumes leakages,smoke,noise levels?<br /> <span className="spancounter" > <i>Stop machine, escalate to Line lead or Team Leader. Countermeasures to be identified and put in place. Machine to start only after validation of countermeasures. </i></span></label>
            <select  className="form-control" id="total10" name="total10" onChange={getTotal} ref={total10}>
           <option value="0">0</option>
           <option value="7">7</option>
@@ -509,6 +543,9 @@ return (
           </div>      
               
        </div>
+
+
+    <Divider  className={classes.dividerSave}/>
         
      <div className="row">
          <div className="col-lg-12 col-md-12">  
@@ -520,6 +557,7 @@ return (
         size="large"
         startIcon={<SaveIcon />}
         type ='submit'
+        className={classes.btnSave}
          >
         Save
       </Button>
@@ -542,7 +580,12 @@ return (
     
     
     </div>
+               
+               
+               
 );
+               
+}
 
 
 

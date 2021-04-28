@@ -1,5 +1,6 @@
 import userstatusreducer from './userstatus';
 import counterReducer from './counter';
+import userInfoReducer from './userinforeducer';
 import {combineReducers} from 'redux';
 
 
@@ -7,7 +8,8 @@ import {combineReducers} from 'redux';
 const allReducers = combineReducers({
     
     userStatus: userstatusreducer,
-    counter: counterReducer
+    counter: counterReducer,
+    userInfo: userInfoReducer,
 });
 
 
