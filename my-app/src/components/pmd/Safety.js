@@ -48,8 +48,11 @@ const [isComplete, goBack]   = useState(false);
 const [isShiftSet, setShift] = useState(false);  
 const [isLineSet, setLine]   = useState(false);  
     
- const [riskTotal, calculateTotal] = useState(0);  
- const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
+//const [riskTotal, calculateTotal] = useState(0);  
+ //const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
+
+
+
  const [boxColor, setBoxColor] = useState("success.main");  
  var today = new Date();
     
@@ -85,6 +88,11 @@ console.log(currentUser);
  const total8 = React.useRef(0);
  const total9 = React.useRef(0);
  const total10 =React.useRef(0);
+
+ const riskTotal = React.useRef(0);
+ const riskLevel = React.useRef("Low Risk");
+
+ 
     
 
     
@@ -113,22 +121,29 @@ let total = parseInt(total1.current.value, 10) +
 //let total = total1.current.value + total2.current.value;
 
     console.log(total);
+
+ //useEffect(() => { calculateTotal(total) }, []);
  
-    calculateTotal(total);
+   // calculateTotal(total);
+
+    riskTotal.current= total;
     
     if(total >= 7){
-       calculateRiskLevel( "High Risk");
+       //calculateRiskLevel( "High Risk");
+       riskLevel.current = "High Risk";
        setBoxColor("error.main");
        document.getElementById("actualrisk").style.backgroundColor = "red";
        document.getElementById("actualrisk").style.color= "#fff";    
         
     } else if(total <7 && total >3){
-       calculateRiskLevel( "Medium Risk");
+      // calculateRiskLevel( "Medium Risk");
+        riskLevel.current = "Medium Risk";
         setBoxColor("warning.main");
         document.getElementById("actualrisk").style.backgroundColor = "yellow";  
         document.getElementById("actualrisk").style.color= "#000";    
     } else{
-       calculateRiskLevel( "Low Risk");
+       //calculateRiskLevel( "Low Risk");
+        riskLevel.current = "Low Risk";
         setBoxColor("success.main");
         document.getElementById("actualrisk").style.backgroundColor = "green";
         document.getElementById("actualrisk").style.color= "#fff";
@@ -181,7 +196,7 @@ function saveInfo(event){
 
 
    if((!shiftComparison ) && (!lineComparison)){
-       getTotal();
+      // getTotal();
 
     const formData = new FormData();
     formData.append('currentdate', currentdate.current.value);
@@ -200,8 +215,8 @@ function saveInfo(event){
     formData.append('total8', total8.current.value);
     formData.append('total9', total9.current.value);
     formData.append('total10', total10.current.value);
-    formData.append('totalscore', riskTotal);
-    formData.append('actualrisk', riskLevel);
+    formData.append('totalscore', riskTotal.current.value);
+    formData.append('actualrisk', riskLevel.current.value);
     formData.append('countermeasures', countermeasures.current.value);
       
     
@@ -316,13 +331,13 @@ return (
     
       <Grid item xs={12} sm={6} md={6} lg={3}>
         <Box bgcolor={boxColor}  color="primary.contrastText" p={1}>
-          Total Score : {riskTotal}
+          Total Score : {riskTotal.current.value}
         </Box>
       </Grid>
     
        <Grid item xs={12} sm={6} md={6} lg={3}>
         <Box bgcolor={boxColor} color="primary.contrastText" p={1}>
-          Risk Level: {riskLevel}
+          Risk Level: {riskLevel.current.value}
         </Box>
       </Grid>
     
@@ -572,7 +587,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Total Score</span>
                </div>
-                  <input type="text" readOnly  className="form-control" id="totalscore" name="totalscore" value={riskTotal} />
+                  <input type="text" readOnly  className="form-control" id="totalscore" name="totalscore" value={riskTotal.current}  />
               </div>
         
          </div> 
@@ -581,7 +596,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Actual Risk Level</span>
                </div>
-                  <input type="text"  readOnly className="form-control" id="actualrisk" name="actualrisk"  value={riskLevel} />
+                  <input type="text"  readOnly className="form-control" id="actualrisk" name="actualrisk" value={riskLevel.current}   />
               </div>
         
          </div> 
