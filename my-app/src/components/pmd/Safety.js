@@ -181,8 +181,7 @@ function saveInfo(event){
 
 
    if((!shiftComparison ) && (!lineComparison)){
-       getTotal();
-
+ 
     const formData = new FormData();
     formData.append('currentdate', currentdate.current.value);
     formData.append('lastupdatedate', lastupdatedate.current.value);
