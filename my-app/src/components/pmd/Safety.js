@@ -67,8 +67,8 @@ const [isLineSet, setLine]   = useState(false);
     
  const supervisor = React.useRef(null);
  const operator = React.useRef(null);
- const line = React.useRef(null);
- const shift = React.useRef(null);
+ const line = React.useRef("Choose...");
+ const shift = React.useRef("Choose...");
  const countermeasures = React.useRef(null);
 
 const currentUser = useSelector(state => state.userInfo.user.data.firstname) + " " + useSelector(state => state.userInfo.user.data.lastname);    
@@ -131,7 +131,7 @@ let total = parseInt(total1.current.value, 10) +
        calculateRiskLevel( "Low Risk");
         setBoxColor("success.main");
         document.getElementById("actualrisk").style.backgroundColor = "green";
-         document.getElementById("actualrisk").style.color= "#fff";
+        document.getElementById("actualrisk").style.color= "#fff";
     }
 
     
@@ -145,41 +145,43 @@ if(v>9){
 else{
   return '0'+v.toString();
       }
-}
+};
     
 function updateDateTime(){
     
     //setDateTime();
-}
+};
 
 
-  function validatFormData(){
-
-    const defaultItem = "Choose...";
-   
-    if(!(defaultItem.localeCompare((shift.current.value).toString()))){
-      setShift(false);
-    } else{
-      setShift(true);
-    }
-
-
-    if(!(defaultItem.localeCompare((line.current.value).toString()))){
-      setLine(false);
-    } else{
-      setLine(true);
-    }
-
- }
+function validateFormData(){
+  
+  let defaultString = 'Choose...';
+    
+  let shiftComparison = (shift.current.value).normalize() === defaultString.normalize();  
+  let lineComparison =  (line.current.value).normalize()  === defaultString.normalize(); 
+  console.log(shiftComparison);
+  console.log(lineComparison);
+    
+    
+      
+  
+ };
     
 function saveInfo(event){
     
     event.preventDefault();
 
-    validatFormData();
+   // validateFormData();
+    
+  let defaultString = 'Choose...';
+  let shiftComparison = (shift.current.value).normalize() === defaultString.normalize();  
+  let lineComparison =  (line.current.value).normalize()   === defaultString.normalize(); 
+ // console.log(shiftComparison);
+  //console.log(lineComparison);
 
 
-   if(isShiftSet && isLineSet){
+   if((!shiftComparison ) && (!lineComparison)){
+       getTotal();
 
     const formData = new FormData();
     formData.append('currentdate', currentdate.current.value);
@@ -254,16 +256,23 @@ function saveInfo(event){
 
       }  else{
 
-
-            if(!isLineSet){
-                alert("Line is required");
+          let errorMessage = "";
+          
+          
+            if(lineComparison){
+                errorMessage = "Line is required";
+               //alert("Line is required");
              }
-            if(!isShiftSet){
-                alert("Shift is required");
+            if(shiftComparison){
+                   errorMessage += " ";
+                  errorMessage += "Shift is required";    
+                
+               //alert("Shift is required");
              }
-
-            
-                console.log(shift.current.value);
+       
+          alert(errorMessage);
+       // console.log(shift.current.value);
+       // console.log(line.current.value);
       }
 
 
@@ -387,7 +396,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Line</span>
                </div>
-                  <select className="custom-select" id="line" name="line" required ref={line} >
+                  <select className="custom-select" id="line" name="line" required onChange={getTotal} ref={line}  >
                   <option defaultValue>Choose...</option>
                   <option value="Conditioning">Conditioning</option>
                   <option value="Drying">Drying</option>
@@ -401,7 +410,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Shift</span>
                </div>
-                <select className="custom-select" id="shift" name="shift" required ref={shift} >
+                <select className="custom-select" id="shift" name="shift"  required  onChange={getTotal} ref={shift}  >
                   <option defaultValue>Choose...</option>
                 <option value="Morning Shift: 7am-3pm">Morning Shift: 7am-3pm</option>
                   <option value="Afternoon Shift: 3pm-11pm">Afternoon Shift: 3pm-11pm</option>

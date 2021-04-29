@@ -33,7 +33,7 @@ $postedactualrisk = isset($data->actualrisk) ? $data->actualrisk  : trim($_POST[
 if(
     !empty($postedcurrentdate) &&
     !empty($postedlastupdatedate ) &&
-    !empty($postedsupervisor ) &&
+   // !empty($postedsupervisor ) &&
     !empty($postedoperator)&&
     !empty($postedline )&&
     !empty($postedshift)&&
