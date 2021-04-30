@@ -48,8 +48,8 @@ const [isComplete, goBack]   = useState(false);
 const [isShiftSet, setShift] = useState(false);  
 const [isLineSet, setLine]   = useState(false);  
     
-//const [riskTotal, calculateTotal] = useState(0);  
- //const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
+const [riskTotal, calculateTotal] = useState(0);  
+const [riskLevel, calculateRiskLevel] = useState("Low Risk");  
 
 
 
@@ -74,9 +74,12 @@ const [isLineSet, setLine]   = useState(false);
  const shift = React.useRef("Choose...");
  const countermeasures = React.useRef(null);
 
-const currentUser = useSelector(state => state.userInfo.user.data.firstname) + " " + useSelector(state => state.userInfo.user.data.lastname);    
-    
-console.log(currentUser);   
+//const currentUser = useSelector(state => state.userInfo.user.data.firstname) + " " 
+                   // + useSelector(state => state.userInfo.user.data.lastname);  
+const name = window.sessionStorage.getItem("name");  
+//const currentUser = (userInfo) ? userInfo.user.data.firstname + " " +userInfo.user.data.lastname : " ";                  
+ const currentUser = name;   
+console.log("username" + name);   
     
  const total1 = React.useRef(0);
  const total2 = React.useRef(0);
@@ -89,8 +92,8 @@ console.log(currentUser);
  const total9 = React.useRef(0);
  const total10 =React.useRef(0);
 
- const riskTotal = React.useRef(0);
- const riskLevel = React.useRef("Low Risk");
+ const riskTotalRef = React.useRef(0);
+ const riskLevelRef = React.useRef("Low Risk");
 
  
     
@@ -120,31 +123,35 @@ let total = parseInt(total1.current.value, 10) +
             parseInt(total10.current.value, 10); 
 //let total = total1.current.value + total2.current.value;
 
-    console.log(total);
+  console.log(total);
 
  //useEffect(() => { calculateTotal(total) }, []);
  
-   // calculateTotal(total);
+  calculateTotal(total);
 
-    riskTotal.current= total;
+
+     document.getElementById("totalscore").value = total;
     
     if(total >= 7){
-       //calculateRiskLevel( "High Risk");
-       riskLevel.current = "High Risk";
+       calculateRiskLevel( "High Risk");
+       riskLevelRef.current = "High Risk";
        setBoxColor("error.main");
+       document.getElementById("actualrisk").value = "High Risk";
        document.getElementById("actualrisk").style.backgroundColor = "red";
        document.getElementById("actualrisk").style.color= "#fff";    
         
     } else if(total <7 && total >3){
-      // calculateRiskLevel( "Medium Risk");
-        riskLevel.current = "Medium Risk";
+        calculateRiskLevel( "Medium Risk");
+        riskLevelRef.current = "Medium Risk";
         setBoxColor("warning.main");
+        document.getElementById("actualrisk").value = "Medium Risk";
         document.getElementById("actualrisk").style.backgroundColor = "yellow";  
         document.getElementById("actualrisk").style.color= "#000";    
     } else{
-       //calculateRiskLevel( "Low Risk");
-        riskLevel.current = "Low Risk";
+       calculateRiskLevel( "Low Risk");
+       riskLevelRef.current = "Low Risk";
         setBoxColor("success.main");
+        document.getElementById("actualrisk").value = "Low Risk";
         document.getElementById("actualrisk").style.backgroundColor = "green";
         document.getElementById("actualrisk").style.color= "#fff";
     }
@@ -174,8 +181,8 @@ function validateFormData(){
     
   let shiftComparison = (shift.current.value).normalize() === defaultString.normalize();  
   let lineComparison =  (line.current.value).normalize()  === defaultString.normalize(); 
-  console.log(shiftComparison);
-  console.log(lineComparison);
+  //console.log(shiftComparison);
+  //console.log(lineComparison);
     
     
       
@@ -190,18 +197,40 @@ function saveInfo(event){
     
   let defaultString = 'Choose...';
   let shiftComparison = (shift.current.value).normalize() === defaultString.normalize();  
-  let lineComparison =  (line.current.value).normalize()   === defaultString.normalize(); 
- // console.log(shiftComparison);
-  //console.log(lineComparison);
+  let lineComparison =  (line.current.value).normalize()  === defaultString.normalize(); 
+  console.log(shiftComparison);
+  console.log(lineComparison);
 
 
-   if((!shiftComparison ) && (!lineComparison)){
-<<<<<<< HEAD
- 
-=======
+   if(shiftComparison && lineComparison){
+
       // getTotal();
 
->>>>>>> 9d008fc0fd6295e120f3bc3a4a438c34e520098b
+        let errorMessage = "";
+          
+          
+            if(lineComparison){
+                errorMessage = "Line is required";
+               //alert("Line is required");
+             }
+            if(shiftComparison){
+                   errorMessage += " ";
+                  errorMessage += "Shift is required";    
+                
+               //alert("Shift is required");
+             }
+       
+          alert(errorMessage);
+       // console.log(shift.current.value);
+       // console.log(line.current.value);
+
+
+      }  else{
+
+       
+
+
+
     const formData = new FormData();
     formData.append('currentdate', currentdate.current.value);
     formData.append('lastupdatedate', lastupdatedate.current.value);
@@ -219,8 +248,8 @@ function saveInfo(event){
     formData.append('total8', total8.current.value);
     formData.append('total9', total9.current.value);
     formData.append('total10', total10.current.value);
-    formData.append('totalscore', riskTotal.current.value);
-    formData.append('actualrisk', riskLevel.current.value);
+    formData.append('totalscore',  document.getElementById("totalscore").value );
+    formData.append('actualrisk',  document.getElementById("actualrisk").value );
     formData.append('countermeasures', countermeasures.current.value);
       
     
@@ -261,7 +290,7 @@ function saveInfo(event){
      
            //const responseJwt = response.data.jwt;
            alert("Data saved Successfully");
-            goBack(true);
+           goBack(true);
 
 
         })
@@ -273,25 +302,13 @@ function saveInfo(event){
         });
 
 
-      }  else{
 
-          let errorMessage = "";
-          
-          
-            if(lineComparison){
-                errorMessage = "Line is required";
-               //alert("Line is required");
-             }
-            if(shiftComparison){
-                   errorMessage += " ";
-                  errorMessage += "Shift is required";    
-                
-               //alert("Shift is required");
-             }
-       
-          alert(errorMessage);
-       // console.log(shift.current.value);
-       // console.log(line.current.value);
+
+
+
+
+
+
       }
 
 
@@ -335,13 +352,13 @@ return (
     
       <Grid item xs={12} sm={6} md={6} lg={3}>
         <Box bgcolor={boxColor}  color="primary.contrastText" p={1}>
-          Total Score : {riskTotal.current.value}
+          Total Score : {riskTotal}
         </Box>
       </Grid>
     
        <Grid item xs={12} sm={6} md={6} lg={3}>
         <Box bgcolor={boxColor} color="primary.contrastText" p={1}>
-          Risk Level: {riskLevel.current.value}
+          Risk Level: {riskLevel}
         </Box>
       </Grid>
     
@@ -403,7 +420,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Operator</span>
                </div>
-                  <input type="text" readOnly className="form-control" name="operator" ref={operator} defaultValue={currentUser}  />
+                  <input type="text" readOnly className="form-control" name="operator" ref={operator} value={currentUser}  />
               </div>
         
           </div>
@@ -591,7 +608,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Total Score</span>
                </div>
-                  <input type="text" readOnly  className="form-control" id="totalscore" name="totalscore" value={riskTotal.current}  />
+                  <input type="text" readOnly  className="form-control" id="totalscore" name="totalscore" value={riskTotal} ref={riskTotalRef}  />
               </div>
         
          </div> 
@@ -600,7 +617,7 @@ return (
                 <div className="input-group-prepend">
                <span className="input-group-text" id="">Actual Risk Level</span>
                </div>
-                  <input type="text"  readOnly className="form-control" id="actualrisk" name="actualrisk" value={riskLevel.current}   />
+                  <input type="text"  readOnly className="form-control" id="actualrisk" name="actualrisk" value={riskLevel} ref={riskLevelRef}   />
               </div>
         
          </div> 

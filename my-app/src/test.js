@@ -105,6 +105,11 @@ function validateUser(mFormData){
            
              //console.log("Before"+ " " + validuser);
               updateuserinfo(response.data);
+
+             // const myStorage = window.sessionStorage;
+
+              
+
               //updateui();
             
        
@@ -139,6 +144,8 @@ function validateUser(mFormData){
             // return false;
         
         });
+
+        // <h4 className="headerTitle"> Status: {validuser.toString()}</h4> 
     
 };
 
@@ -152,7 +159,7 @@ return (
 
 <div className="testDiv">
 
-  <h4 className="headerTitle"> Status: {validuser.toString()}</h4> 
+ 
 <div  className="container-fluid headerDiv" >
 
    <div className="row align-items-center"  >

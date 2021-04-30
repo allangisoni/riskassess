@@ -20,7 +20,38 @@ function App() {
    const dispatch = useDispatch();
     
   //const ValidUser = useSelector(state => state.userStatus);
-  const ValidUser = useSelector(state => state.userInfo.loggedIn);
+   const ValidUser = useSelector(state => state.userInfo.loggedIn);
+   var userInfor = useSelector(state => state.userInfo.user);
+   var isLoggedIn = false;
+
+   
+
+  if(window.sessionStorage.getItem('isLoggedIn')){
+
+     isLoggedIn =true;
+     //window.sessionStorage.setItem("userInfo", userInfor);
+
+   } else{
+    
+   if(ValidUser && userInfor){
+
+    isLoggedIn =ValidUser;
+    window.sessionStorage.setItem("isLoggedIn", ValidUser);
+    window.sessionStorage.setItem("name", userInfor.data.firstname + " " + userInfor.data.lastname);
+    }
+   
+   }
+
+ 
+
+  //window.sessionStorage.setItem("userinfo", response.data);
+
+
+  //const myStorage = window.sessionStorage;
+
+  //const ValidUser = window.sessionStorage.getItem("isLoggedIn");
+  //console.log(window.sessionStorage.getItem("isLoggedIn"));
+
    //const ValidUser = true;
 
 
@@ -30,7 +61,7 @@ function App() {
         
         <Router>
          <div className="appDiv"> 
-          {ValidUser ?  <Demo />: <Test /> }
+          {isLoggedIn ?  <Demo />: <Test /> }
         
        
 
